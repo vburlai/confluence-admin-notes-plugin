@@ -14,7 +14,7 @@
         <url>https://github.com/vburlai/confluence-admin-notes-plugin</url>
     </organization>
 
-    <name>confluence-admin-notes</name>
+    <name>Confluence Admin Notes Plugin</name>
     <description>This is the name.vitaly.burlai:confluence-admin-notes plugin for Atlassian Confluence.</description>
     <packaging>atlassian-plugin</packaging>
 
@@ -66,6 +66,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>

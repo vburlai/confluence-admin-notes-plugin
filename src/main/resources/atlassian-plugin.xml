@@ -19,8 +19,9 @@
         <resource type="download" name="images/" location="/images"/>
 
         <context>confluence-admin-notes</context>
+        <context>atl.admin</context>
     </web-resource>
-    
+
     <!-- publish our component -->
     <component key="myPluginComponent" class="name.vitaly.burlai.MyPluginComponentImpl" public="true">
         <interface>name.vitaly.burlai.MyPluginComponent</interface>
