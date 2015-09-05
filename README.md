@@ -1,1 +1,1 @@
-# confluence-admin-notes-plugin
+# Confluence Admin Notes Plugin
