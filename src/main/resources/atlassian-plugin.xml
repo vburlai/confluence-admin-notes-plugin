@@ -22,9 +22,16 @@
         <context>atl.admin</context>
     </web-resource>
 
+    <servlet class="name.vitaly.burlai.ConfluenceAdminNotesServlet" key="confluence-admin-notes-servlet">
+        <description>
+            Writing to and reading from the storage file
+        </description>
+        <url-pattern>/confluence-admin-notes/*</url-pattern>
+    </servlet>
+
     <!-- publish our component -->
-    <component key="myPluginComponent" class="name.vitaly.burlai.MyPluginComponentImpl" public="true">
-        <interface>name.vitaly.burlai.MyPluginComponent</interface>
+    <component key="confluenceAdminNotesStorage" class="name.vitaly.burlai.ConfluenceAdminNotesStorageImpl" public="true">
+        <interface>name.vitaly.burlai.ConfluenceAdminNotesStorage</interface>
     </component>
     
     <!-- import from the product container -->
