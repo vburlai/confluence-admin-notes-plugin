@@ -26,6 +26,10 @@
         <description>
             Writing to and reading from the storage file
         </description>
+        <init-param>
+            <param-name>url-prefix</param-name>
+            <param-value>/plugins/servlet/confluence-admin-notes/</param-value>
+        </init-param>
         <url-pattern>/confluence-admin-notes/*</url-pattern>
     </servlet>
 
