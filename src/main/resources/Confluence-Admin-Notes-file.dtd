@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT confluence-admin-notes (plugin-note)>
+<!ELEMENT plugin-note (#CDATA)>
+<!ATTLIST plugin-note plugin-id ID #REQUIRED>
