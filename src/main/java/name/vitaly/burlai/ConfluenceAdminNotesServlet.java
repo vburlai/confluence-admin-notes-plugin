@@ -7,6 +7,7 @@ package name.vitaly.burlai;
 import com.atlassian.confluence.security.PermissionManager;
 import com.atlassian.confluence.user.AuthenticatedUserThreadLocal;
 import com.atlassian.confluence.user.ConfluenceUser;
+import com.atlassian.json.jsonorg.JSONObject;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -172,8 +173,9 @@ public class ConfluenceAdminNotesServlet extends HttpServlet {
             if (key == null) {
                 resp.getOutputStream().print( storage.getPluginsConfig() );
             } else {
-                String json = "{\"" + key +"\":\"" + storage.getPluginConfig(key) + "\"}";
-                resp.getOutputStream().print(json);
+                JSONObject json = new JSONObject();
+                json.put(key, storage.getPluginConfig(key));
+                resp.getOutputStream().print(json.toString());
             }
         } catch (IOException e) { e.printStackTrace(); }
     }
