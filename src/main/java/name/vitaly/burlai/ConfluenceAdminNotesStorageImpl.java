@@ -113,7 +113,6 @@ public class ConfluenceAdminNotesStorageImpl implements ConfluenceAdminNotesStor
      * @param to   new value
      * @return     true is successful
      */
-    @SuppressWarnings("rawtypes")
     public boolean updatePluginConfig(String key, String from, String to)
     {
         try {
