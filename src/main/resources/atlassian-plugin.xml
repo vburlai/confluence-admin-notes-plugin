@@ -15,7 +15,8 @@
         <dependency>com.atlassian.auiplugin:ajs</dependency>
         
         <resource type="download" name="confluence-admin-notes.css" location="/css/confluence-admin-notes.css"/>
-        <resource type="download" name="confluence-admin-notes.js" location="/js/confluence-admin-notes.js"/>
+        <resource type="download" name="confluence-admin-notes-service.js" location="/js/confluence-admin-notes-service.js"/>
+        <resource type="download" name="confluence-admin-notes-integration.js" location="/js/confluence-admin-notes-integration.js"/>
         <resource type="download" name="images/" location="/images"/>
 
         <context>confluence-admin-notes</context>

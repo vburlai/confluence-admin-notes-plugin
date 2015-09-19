@@ -2,11 +2,30 @@
  * Copyright (c) 2015 Vitaly Burlai <vitaly.burlai@gmail.com>
  */
 
-var AdminNotes = {
-    '$':         AJS.$, //jQuery
+var AdminNotesService = {
+    '$':         AJS.$, // jQuery
     'urlPrefix': AJS.contextPath() + '/plugins/servlet/confluence-admin-notes/plugins/'
 };
 
+/**
+ * Get notes for all plugins
+ *
+ * @returns the deferred object, .done function get the data
+ */
+AdminNotesService.getPlugins = function () {
+    var deferred = this.$.Deferred();
+
+    this.$.getJSON(this.urlPrefix)
+        .done(function (obj) {
+            console.log(obj);
+            deferred.resolve(obj);
+        })
+        .fail(function () {
+            deferred.reject();
+        });
+
+    return deferred;
+};
 
 /**
  * Get notes for the specified plugin key
@@ -14,7 +33,7 @@ var AdminNotes = {
  * @param   pluginKey plugin key
  * @returns the deferred object, .done function gets the value
  */
-AdminNotes.get = function (pluginKey) {
+AdminNotesService.get = function (pluginKey) {
     var deferred = this.$.Deferred();
 
     this.$.getJSON(this.urlPrefix + pluginKey + '/')
@@ -38,7 +57,7 @@ AdminNotes.get = function (pluginKey) {
  * @param   to    new value
  * @returns the deferred object, .fail function gets the value at server (which caused conflict)
  */
-AdminNotes.set = function (pluginKey, from, to) {
+AdminNotesService.set = function (pluginKey, from, to) {
     var deferred = this.$.Deferred();
     var params = 'from=' + encodeURIComponent(from) + '&to=' + encodeURIComponent(to);
 
@@ -68,7 +87,7 @@ AdminNotes.set = function (pluginKey, from, to) {
  * @returns the deferred object, .fail function gets the value at server (which was not removed)
  */
 
-AdminNotes.remove = function (pluginKey, value) {
+AdminNotesService.remove = function (pluginKey, value) {
     var deferred = this.$.Deferred();
     var params = 'value=' + encodeURIComponent(value);
 
@@ -88,11 +107,4 @@ AdminNotes.remove = function (pluginKey, value) {
             deferred.reject();
         });
 };
-
-
-(function($){
-    $(window).bind('upmready', function() {
-        console.log('UPM ready. Confluence Admin Notes loaded.');
-    });
-})(AJS.$);
 

@@ -1,0 +1,71 @@
+#confluence-admin-notes {
+    display: inline-block;
+    background: transparent url('images/mainIcon.png') 0 0 no-repeat;
+    vertical-align: top;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+#confluence-admin-notes .count {
+    background: #fff933;
+    margin: 9px 0 0 20px;
+    padding: 0 5px;
+    border-radius: 10px;
+    border:1px solid #4184bb;
+    color: #666;
+}
+
+#confluence-admin-notes .count.invisible {
+    visibility: hidden;
+}
+
+#confluence-admin-notes-list-shown {
+    display: none;
+}
+
+#confluence-admin-notes-list-shown:checked + #confluence-admin-notes-list {
+    display: block;
+}
+
+#confluence-admin-notes-list {
+    display: none;
+    position: absolute;
+    right: 0;
+    margin-top: 2px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    z-index: 100;
+}
+
+#confluence-admin-notes-list .loading{
+    display: none;
+}
+
+#confluence-admin-notes-list.ldng .loading{
+    display: block;
+    background-position: 5px 50%;
+    padding-left: 25px;
+    line-height: 30px;
+    padding-right: 5px;
+}
+
+#confluence-admin-notes-list .list-item {
+    border-bottom: 1px solid #ccc;
+    padding: 2px 5px;
+    cursor: pointer;
+}
+
+#confluence-admin-notes-list .list-item:hover {
+    background-color: #b2c2d1;
+}
+
+#confluence-admin-notes-list .list-item:before {
+    content: ' ';
+    background-color: #fff933;
+    border: 1px solid #4184bb;
+    width: 10px;
+    margin-right: 10px;
+    display: inline-block;
+    height: 10px;
+}
