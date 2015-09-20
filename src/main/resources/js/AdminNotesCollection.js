@@ -80,6 +80,8 @@ var AdminNotesCollection = {
 
                 res.reject(json.notes);
             });
+
+        return res;
     },
     /**
      * Add notes for new plugin
@@ -112,6 +114,8 @@ var AdminNotesCollection = {
 
                 res.reject(json.notes);
             });
+
+        return res;
     }
 };
 

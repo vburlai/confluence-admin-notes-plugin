@@ -76,6 +76,8 @@ AdminNotesService.set = function (pluginKey, from, to) {
         .fail(function () {
             deferred.reject();
         });
+
+    return deferred;
 };
 
 
@@ -106,5 +108,7 @@ AdminNotesService.remove = function (pluginKey, value) {
         .fail(function () {
             deferred.reject();
         });
+
+    return deferred;
 };
 
