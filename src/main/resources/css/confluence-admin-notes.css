@@ -31,9 +31,10 @@
     display: none;
     position: absolute;
     right: 0;
-    margin-top: 2px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
     background-color: #fff;
     z-index: 100;
 }
@@ -54,10 +55,11 @@
     border-bottom: 1px solid #ccc;
     padding: 2px 5px;
     cursor: pointer;
+    text-align: left;
 }
 
 #confluence-admin-notes-list .list-item:hover {
-    background-color: #b2c2d1;
+    background-color: #f0f0f0;
 }
 
 #confluence-admin-notes-list .list-item:before {
@@ -68,4 +70,17 @@
     margin-right: 10px;
     display: inline-block;
     height: 10px;
+}
+
+#confluence-admin-notes-list .add {
+    float: none;
+    padding: 5px;
+    text-align: center;
+    font-size: 0.8em;
+    background-color: rgb(209, 255, 208);
+}
+
+#admin-notes-dialog TEXTAREA {
+    width: 100%;
+    height: 100px;
 }
