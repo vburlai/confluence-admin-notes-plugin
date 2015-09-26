@@ -4,12 +4,16 @@
 
 (function($){
     $(window).bind('upmready', function() {
-        AdminNotesView.init();
-        AdminNotesListView.init();
 
         AdminNotesCollection.fetch();
 
-        AdminNotesDialog.init();
+        $(document).on('admin-notes-collection-updated', function () {
+            AdminNotesView.init();
+            AdminNotesListView.init();
+            AdminNotesManagePluginsView.init();
+
+            AdminNotesDialog.init();
+        });
     });
 })(AJS.$);
 
