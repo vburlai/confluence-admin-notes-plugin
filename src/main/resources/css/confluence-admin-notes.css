@@ -13,6 +13,8 @@
     border-radius: 10px;
     border:1px solid #4184bb;
     color: #666;
+    /* TODO: maybe remove .count or restyle */
+    visibility: hidden;
 }
 
 #confluence-admin-notes .count.invisible {
@@ -91,4 +93,8 @@
 #admin-notes-dialog .title {
     font-size: 1.2em;
     font-weight: bold;
+}
+
+.admin-notes-action {
+    margin: 0 10px;
 }

@@ -21,6 +21,7 @@
         <resource type="download" name="AdminNotesService.js" location="/js/AdminNotesService.js"/>
         <resource type="download" name="views/AdminNotesView.js" location="/js/views/AdminNotesView.js"/>
         <resource type="download" name="views/AdminNotesListView.js" location="/js/views/AdminNotesListView.js"/>
+        <resource type="download" name="views/AdminNotesManagePluginsView.js" location="/js/views/AdminNotesManagePluginsView.js"/>
         <resource type="download" name="collections/AdminNotesCollection.js" location="/js/collections/AdminNotesCollection.js"/>
         <resource type="download" name="controllers/AdminNotesDialog.js" location="/js/controllers/AdminNotesDialog.js"/>
         <resource type="download" name="confluence-admin-notes-integration.js" location="/js/confluence-admin-notes-integration.js"/>

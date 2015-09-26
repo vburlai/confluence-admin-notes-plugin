@@ -13,6 +13,7 @@ var AdminNotesDialog = {
     pluginkey: '',
     plugintitle: '',
     pluginnotes: '',
+    pluginnew: false,
     init: function () {
         if (this.elem === null) {
             this.elem = $('<section role="dialog" id="admin-notes-dialog" '+
@@ -36,6 +37,7 @@ var AdminNotesDialog = {
         html += '<div class="aui-dialog2-content">';
         html += '  <p class="title">Plugin: <span class="plugintitle"></span></p>';
         html += '  <input type="hidden" name="pluginkey" value="">';
+        html += '  <input type="hidden" name="plugintitle" value="">';
         html += '  <textarea name="notes"></textarea>';
         html += '</div>';
         html += '<footer class="aui-dialog2-footer">';
@@ -54,6 +56,23 @@ var AdminNotesDialog = {
         this.pluginkey = key;
         this.plugintitle = AdminNotesCollection.getTitle(key);
         this.pluginnotes = AdminNotesCollection.getNotes(key);
+        this.pluginnew = false;
+
+        if (this.elem === null) {
+            this.init();
+        }
+
+        this.refresh();
+
+        this.dialog.show();
+    },
+    add: function (key, title) {
+        AdminNotesView.hideList();
+
+        this.pluginkey = key;
+        this.plugintitle = title;
+        this.pluginnotes = '';
+        this.pluginnew = true;
 
         if (this.elem === null) {
             this.init();
@@ -69,13 +88,29 @@ var AdminNotesDialog = {
     refresh: function () {
         this.elem.find('[name=pluginkey]').val(this.pluginkey);
         this.elem.find('.plugintitle').text(this.plugintitle);
+        this.elem.find('[name=plugintitle]').val(this.plugintitle);
         this.elem.find('[name=notes]').text(this.pluginnotes);
     },
     save: function () {
         var key = this.elem.find('[name=pluginkey]').val(),
-            notes = this.elem.find('[name=notes]').val();
+            title = this.elem.find('[name=plugintitle]').val(),
+            notes = this.elem.find('[name=notes]').val(),
+            deferred;
 
-        AdminNotesCollection.save(key, notes).done(
+        if (this.pluginnew) {
+            if (notes.trim().length) {
+                deferred = AdminNotesCollection.add(key, title, notes);
+            } else {
+                deferred = this.$.Deferred().resolve();
+            }
+        } else {
+            if (notes.trim().length) {
+                deferred = AdminNotesCollection.save(key, notes);
+            } else {
+                deferred = AdminNotesCollection.remove(key);
+            }
+        }
+        deferred.done(
             this.$.proxy(
                 function () {
                     this.hide();
