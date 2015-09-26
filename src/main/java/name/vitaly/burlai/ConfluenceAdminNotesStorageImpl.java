@@ -135,7 +135,8 @@ public class ConfluenceAdminNotesStorageImpl implements ConfluenceAdminNotesStor
             // Adding new lines for readability
             setRawJSONConfig(json.toJSONString()
                              .replace("\":{", "\":\n{")
-                             .replace("\":\"", "\":\n\""));
+                             .replace("\":\"", "\":\n\"")
+                             .replace("\",\"", "\",\n\""));
 
             return true;
 

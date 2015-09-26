@@ -40,15 +40,15 @@ public class ConfluenceAdminNotesStorageImplTest extends TestCase {
         assertEquals("Empty config file", "{}", obj.getPluginsConfig());
 
         String plugins = "{\"abc\":\"efd\"}";
-        String json = "{\"test\":\"test\",\"plugins\":"+plugins+"}";
+        String json = "{\"test\":\"test\",\n\"plugins\":"+plugins+"}";
         obj.setRawJSONConfig(json);
 
         assertEquals("Getting 'plugins' part of config", plugins, obj.getPluginsConfig());
     }
 
     public void testGetPluginConfig() throws Exception {
-        String plugins = "{\"abc\":\"def\",\"123\":\"456\"}";
-        String json = "{\"test\":\"test\",\"plugins\":"+plugins+"}";
+        String plugins = "{\"abc\":\"def\",\n\"123\":\"456\"}";
+        String json = "{\"test\":\"test\",\n\"plugins\":"+plugins+"}";
         obj.setRawJSONConfig(json);
 
         assertEquals("Getting first record", "def", obj.getPluginConfig("abc"));
@@ -62,8 +62,8 @@ public class ConfluenceAdminNotesStorageImplTest extends TestCase {
 
         assertEquals("Created new entry", "{\"plugins\":\n{\"test\":\n\"test test\"}}", obj.getRawJSONConfig());
 
-        String config  = "{\"test\":\"test\",\"plugins\":{\"123\":\"456\"}}";
-        String config2 = "{\"test\":\n\"test\",\"plugins\":\n{\"123\":\n\"321\"}}";
+        String config  = "{\"test\":\"test\",\n\"plugins\":{\"123\":\"456\"}}";
+        String config2 = "{\"test\":\n\"test\",\n\"plugins\":\n{\"123\":\n\"321\"}}";
         obj.setRawJSONConfig(config);
 
         obj.updatePluginConfig("123", "", "321");
