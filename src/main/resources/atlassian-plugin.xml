@@ -16,10 +16,10 @@
         
         <resource type="download" name="confluence-admin-notes.css" location="/css/confluence-admin-notes.css"/>
         <resource type="download" name="AdminNotesService.js" location="/js/AdminNotesService.js"/>
-        <resource type="download" name="AdminNotesView.js" location="/js/AdminNotesView.js"/>
-        <resource type="download" name="AdminNotesListView.js" location="/js/AdminNotesListView.js"/>
-        <resource type="download" name="AdminNotesCollection.js" location="/js/AdminNotesCollection.js"/>
-        <resource type="download" name="AdminNotesDialog.js" location="/js/AdminNotesDialog.js"/>
+        <resource type="download" name="views/AdminNotesView.js" location="/js/views/AdminNotesView.js"/>
+        <resource type="download" name="views/AdminNotesListView.js" location="/js/views/AdminNotesListView.js"/>
+        <resource type="download" name="collections/AdminNotesCollection.js" location="/js/collections/AdminNotesCollection.js"/>
+        <resource type="download" name="controllers/AdminNotesDialog.js" location="/js/controllers/AdminNotesDialog.js"/>
         <resource type="download" name="confluence-admin-notes-integration.js" location="/js/confluence-admin-notes-integration.js"/>
         <resource type="download" name="images/" location="/images"/>
 

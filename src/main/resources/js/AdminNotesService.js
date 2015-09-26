@@ -20,7 +20,7 @@ AdminNotesService.getPlugins = function () {
             console.log(obj);
             deferred.resolve(obj);
         })
-        .fail(function () {
+        .fail(function (xhr, status) {
             deferred.reject();
         });
 
@@ -41,7 +41,7 @@ AdminNotesService.get = function (pluginKey) {
             console.log(obj[pluginKey]);
             deferred.resolve(obj[pluginKey]);
         })
-        .fail(function () {
+        .fail(function (xhr, status) {
             deferred.reject();
         });
 
@@ -73,8 +73,11 @@ AdminNotesService.set = function (pluginKey, from, to) {
                 deferred.reject(obj[pluginKey]);
             }
         })
-        .fail(function () {
-            deferred.reject();
+        .fail(function (xhr, status) {
+            console.log(xhr.status);
+            console.log(xhr.responseText);
+            var obj = JSON.parse(xhr.responseText);
+            deferred.reject(typeof obj == "object" ? obj[pluginKey] : null);
         });
 
     return deferred;
@@ -105,8 +108,11 @@ AdminNotesService.remove = function (pluginKey, value) {
                 deferred.reject(obj[pluginKey]);
             }
         })
-        .fail(function () {
-            deferred.reject();
+        .fail(function (xhr, status) {
+            console.log(xhr.status);
+            console.log(xhr.responseText);
+            var obj = JSON.parse(xhr.responseText);
+            deferred.reject(typeof obj == "object" ? obj[pluginKey] : null);
         });
 
     return deferred;
