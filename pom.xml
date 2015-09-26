@@ -11,11 +11,11 @@
 
     <organization>
         <name>Vitalii Burlai</name>
-        <url>https://github.com/vburlai/confluence-admin-notes-plugin</url>
+        <url>https://github.com/vburlai/confluence-admin-notes-plugin/wiki</url>
     </organization>
 
-    <name>Confluence Admin Notes Plugin</name>
-    <description>This is the name.vitaly.burlai:confluence-admin-notes plugin for Atlassian Confluence.</description>
+    <name>Confluence Admin Notes</name>
+    <description>Add notes in Confluence administration area for yourself or to share with colleagues</description>
     <packaging>atlassian-plugin</packaging>
 
     <dependencies>
