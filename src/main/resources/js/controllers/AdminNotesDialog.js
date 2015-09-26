@@ -72,16 +72,19 @@ var AdminNotesDialog = {
         this.elem.find('[name=notes]').text(this.pluginnotes);
     },
     save: function () {
-        var self = this,
-            key = this.elem.find('[name=pluginkey]').val(),
+        var key = this.elem.find('[name=pluginkey]').val(),
             notes = this.elem.find('[name=notes]').val();
 
-        AdminNotesCollection.save(key, notes).done(function () {
-                self.hide();
-            }).fail(function () {
-                // TODO: conflict resolution
-                alert('Failed to save, try again');
-            });
+        AdminNotesCollection.save(key, notes).done(
+            this.$.proxy(
+                function () {
+                    this.hide();
+                }, this) ).fail(
+            this.$.proxy(
+                function () {
+                    // TODO: conflict resolution
+                    alert('Failed to save, try again');
+                }, this) );
     }
 };
 
