@@ -34,7 +34,7 @@ var AdminNotesDialog = {
         html += '  <a class="aui-dialog2-header-close"><span class="aui-icon aui-icon-small aui-iconfont-close-dialog">Close</span></a>';
         html += '</header>';
         html += '<div class="aui-dialog2-content">';
-        html += '  <p>Plugin: <span class="plugintitle"></span></p>';
+        html += '  <p class="title">Plugin: <span class="plugintitle"></span></p>';
         html += '  <input type="hidden" name="pluginkey" value="">';
         html += '  <textarea name="notes"></textarea>';
         html += '</div>';
