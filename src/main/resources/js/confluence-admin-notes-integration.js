@@ -11,6 +11,7 @@
             AdminNotesView.init();
             AdminNotesListView.init();
             AdminNotesListView.collectionUpdated();
+            AdminNotesTooltipView.init();
             AdminNotesManagePluginsView.init();
 
             AdminNotesDialog.init();

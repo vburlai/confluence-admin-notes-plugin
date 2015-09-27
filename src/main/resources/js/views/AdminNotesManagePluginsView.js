@@ -71,7 +71,11 @@ var AdminNotesManagePluginsView = {
         btn.attr('src', this.PATH + (obj.hasNotes ?  this.ICON : this.ICON_ADD));
         btn.attr('title', 'Admin Notes');
         btn.attr('data-pluginname', obj.pluginname);
-        btn.on('click', this.$.proxy(this.clickHandler, this));
+        btn.off('click').on('click', this.$.proxy(this.clickHandler, this));
+        btn.off('mouseenter');
+        if (obj.hasNotes) {
+            btn.on('mouseenter', this.$.proxy(this.hoverHandler, this));
+        }
     },
     clickHandler: function (event) {
         var key = this.$(event.target).attr('data-pluginkey'),
@@ -82,6 +86,11 @@ var AdminNotesManagePluginsView = {
         } else {
             AdminNotesDialog.add(key, title);
         }
+    },
+    hoverHandler: function (event) {
+        var target = this.$(event.target),
+            key = target.attr('data-pluginkey');
+        AdminNotesTooltipView.show(target, key);
     }
 };
 
