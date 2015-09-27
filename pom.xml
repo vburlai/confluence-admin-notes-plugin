@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>name.vitaly.burlai</groupId>
     <artifactId>confluence-admin-notes</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
 
     <organization>
         <name>Vitalii Burlai</name>
@@ -101,6 +101,21 @@
                     <items>
                         <item>buildNumber</item>
                     </items>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>net.sf.alchim</groupId>
+                <artifactId>yuicompressor-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compress</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <linebreakpos>-1</linebreakpos>
+                    <jswarn>false</jswarn>
                 </configuration>
             </plugin>
         </plugins>

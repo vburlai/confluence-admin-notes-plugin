@@ -17,15 +17,15 @@
     <web-resource key="confluence-admin-notes-resources" name="confluence-admin-notes Web Resources">
         <dependency>com.atlassian.auiplugin:ajs</dependency>
         
-        <resource type="download" name="confluence-admin-notes.css" location="/css/confluence-admin-notes.css"/>
-        <resource type="download" name="AdminNotesService.js" location="/js/AdminNotesService.js"/>
-        <resource type="download" name="views/AdminNotesView.js" location="/js/views/AdminNotesView.js"/>
-        <resource type="download" name="views/AdminNotesListView.js" location="/js/views/AdminNotesListView.js"/>
-        <resource type="download" name="views/AdminNotesTooltipView.js" location="/js/views/AdminNotesTooltipView.js"/>
-        <resource type="download" name="views/AdminNotesManagePluginsView.js" location="/js/views/AdminNotesManagePluginsView.js"/>
-        <resource type="download" name="collections/AdminNotesCollection.js" location="/js/collections/AdminNotesCollection.js"/>
-        <resource type="download" name="controllers/AdminNotesDialog.js" location="/js/controllers/AdminNotesDialog.js"/>
-        <resource type="download" name="confluence-admin-notes-integration.js" location="/js/confluence-admin-notes-integration.js"/>
+        <resource type="download" name="confluence-admin-notes.css" location="/css/confluence-admin-notes-min.css"/>
+        <resource type="download" name="AdminNotesService.js" location="/js/AdminNotesService-min.js"/>
+        <resource type="download" name="views/AdminNotesView.js" location="/js/views/AdminNotesView-min.js"/>
+        <resource type="download" name="views/AdminNotesListView.js" location="/js/views/AdminNotesListView-min.js"/>
+        <resource type="download" name="views/AdminNotesTooltipView.js" location="/js/views/AdminNotesTooltipView-min.js"/>
+        <resource type="download" name="views/AdminNotesManagePluginsView.js" location="/js/views/AdminNotesManagePluginsView-min.js"/>
+        <resource type="download" name="collections/AdminNotesCollection.js" location="/js/collections/AdminNotesCollection-min.js"/>
+        <resource type="download" name="controllers/AdminNotesDialog.js" location="/js/controllers/AdminNotesDialog-min.js"/>
+        <resource type="download" name="confluence-admin-notes-integration.js" location="/js/confluence-admin-notes-integration-min.js"/>
         <resource type="download" name="images/" location="/images"/>
 
         <context>confluence-admin-notes</context>

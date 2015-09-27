@@ -17,7 +17,6 @@ AdminNotesService.getPlugins = function () {
 
     this.$.getJSON(this.urlPrefix)
         .done(function (obj) {
-            console.log(obj);
             deferred.resolve(obj);
         })
         .fail(function (xhr, status) {
@@ -38,7 +37,6 @@ AdminNotesService.get = function (pluginKey) {
 
     this.$.getJSON(this.urlPrefix + pluginKey + '/')
         .done(function (obj) {
-            console.log(obj[pluginKey]);
             deferred.resolve(obj[pluginKey]);
         })
         .fail(function (xhr, status) {
@@ -65,8 +63,6 @@ AdminNotesService.set = function (pluginKey, from, to) {
         this.urlPrefix + pluginKey + '/?' + params,
         {'type': 'PUT'})
         .done(function (obj, status, xhr) {
-            console.log(xhr.status);
-            console.log(xhr.responseText);
             if (xhr.status == 200) {
                 deferred.resolve();
             } else {
@@ -74,8 +70,6 @@ AdminNotesService.set = function (pluginKey, from, to) {
             }
         })
         .fail(function (xhr, status) {
-            console.log(xhr.status);
-            console.log(xhr.responseText);
             var obj = JSON.parse(xhr.responseText);
             deferred.reject(typeof obj == "object" ? obj[pluginKey] : null);
         });
@@ -100,8 +94,6 @@ AdminNotesService.remove = function (pluginKey, value) {
         this.urlPrefix + pluginKey + '/?' + params,
         {'type': 'DELETE'})
         .done(function (obj, status, xhr) {
-            console.log(xhr.status);
-            console.log(xhr.responseText);
             if (xhr.status == 200) {
                 deferred.resolve();
             } else {
@@ -109,8 +101,6 @@ AdminNotesService.remove = function (pluginKey, value) {
             }
         })
         .fail(function (xhr, status) {
-            console.log(xhr.status);
-            console.log(xhr.responseText);
             var obj = JSON.parse(xhr.responseText);
             deferred.reject(typeof obj == "object" ? obj[pluginKey] : null);
         });
