@@ -20,10 +20,15 @@ var AdminNotesCollection = {
     titles: {},
     // positions in plugins array
     pos: {},
+    timer: null,
+    REFRESH: 5000,
     /**
      * Reads admin notes and updates AdminNotesListView
      */
     fetch: function () {
+        if (this.timer === null) {
+            this.timer = window.setInterval(this.$.proxy(this.fetch, this), this.REFRESH);
+        }
         AdminNotesService.getPlugins().done(
             this.$.proxy(
                 function (data) {

@@ -32,6 +32,16 @@ var AdminNotesDialog = {
 
             this.elem.find('#dialog-submit-button, #dialog-overwrite-button').on('click', function () { AdminNotesDialog.save(); });
             this.elem.find('#dialog-close-button').on('click', function () { AdminNotesDialog.hide(); });
+
+            this.$(document).on('admin-notes-collection-updated', this.$.proxy(this.collectionUpdated, this));
+        }
+    },
+    collectionUpdated: function () {
+        if (this.dialog.isVisible()) {
+            var notes = AdminNotesCollection.getNotes(this.pluginkey);
+            if (this.pluginnotes != notes) {
+                this.showConflict(notes);
+            }
         }
     },
     render: function () {
