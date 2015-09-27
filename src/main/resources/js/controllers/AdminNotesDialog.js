@@ -8,12 +8,18 @@
  */
 var AdminNotesDialog = {
     $: AJS.$,
+    OVERWRITE: "Overwrite",
+    OVERWRITEC: "Overwrite (#)",
+    COUNTDOWN: 5,
     elem: null,
     dialog: null,
     pluginkey: '',
     plugintitle: '',
     pluginnotes: '',
     pluginnew: false,
+    overwrite: null,
+    counter: 0,
+    timer: null,
     init: function () {
         if (this.elem === null) {
             this.elem = $('<section role="dialog" id="admin-notes-dialog" '+
@@ -24,7 +30,7 @@ var AdminNotesDialog = {
 
             this.dialog = AJS.dialog2('#admin-notes-dialog');
 
-            this.elem.find('#dialog-submit-button').on('click', function () { AdminNotesDialog.save(); });
+            this.elem.find('#dialog-submit-button, #dialog-overwrite-button').on('click', function () { AdminNotesDialog.save(); });
             this.elem.find('#dialog-close-button').on('click', function () { AdminNotesDialog.hide(); });
         }
     },
@@ -35,6 +41,10 @@ var AdminNotesDialog = {
         html += '  <a class="aui-dialog2-header-close"><span class="aui-icon aui-icon-small aui-iconfont-close-dialog">Close</span></a>';
         html += '</header>';
         html += '<div class="aui-dialog2-content">';
+        html += '  <div class="conflict">';
+        html += '  Warning! While you were editing, the notes were updated to the following:<br>';
+        html += '  <textarea name="prevnotes" readonly="readonly"></textarea>';
+        html += '  </div>';
         html += '  <p class="title">Plugin: <span class="plugintitle"></span></p>';
         html += '  <input type="hidden" name="pluginkey" value="">';
         html += '  <input type="hidden" name="plugintitle" value="">';
@@ -43,14 +53,17 @@ var AdminNotesDialog = {
         html += '<footer class="aui-dialog2-footer">';
         html += '<div class="aui-dialog2-footer-actions">';
         html += '  <button id="dialog-submit-button" class="aui-button aui-button-primary">Save</button>';
+        html += '  <button id="dialog-overwrite-button" class="aui-button aui-button-primary">Overwrite</button>';
         html += '  <button id="dialog-close-button" class="aui-button aui-button-close">Close</button>';
         html += '</div>';
-        // html += '<div class="aui-dialog2-footer-hint">Hint</div>';
+        html += '<div class="aui-dialog2-footer-hint">There was a conflict while saving, but you can overwrite</div>';
         html += '</footer>';
 
         this.elem.html(html);
+        this.overwrite = this.elem.find('#dialog-overwrite-button');
     },
     show: function (key) {
+        this.hideConflict();
         AdminNotesView.hideList();
 
         this.pluginkey = key;
@@ -67,6 +80,7 @@ var AdminNotesDialog = {
         this.dialog.show();
     },
     add: function (key, title) {
+        this.hideConflict();
         AdminNotesView.hideList();
 
         this.pluginkey = key;
@@ -91,10 +105,11 @@ var AdminNotesDialog = {
         this.refresh();
     },
     refresh: function () {
-        this.elem.find('[name=pluginkey]').val(this.pluginkey);
         this.elem.find('.plugintitle').text(this.plugintitle);
+
+        this.elem.find('[name=pluginkey]').val(this.pluginkey);
         this.elem.find('[name=plugintitle]').val(this.plugintitle);
-        this.elem.find('[name=notes]').text(this.pluginnotes);
+        this.elem.find('[name=notes]').val(this.pluginnotes);
     },
     save: function () {
         var key = this.elem.find('[name=pluginkey]').val(),
@@ -121,10 +136,35 @@ var AdminNotesDialog = {
                     this.hide();
                 }, this) ).fail(
             this.$.proxy(
-                function () {
-                    // TODO: conflict resolution
-                    alert('Failed to save, try again');
+                function (notes) {
+                    this.showConflict(notes);
                 }, this) );
+    },
+    showConflict: function (notes) {
+        this.elem.find('[name=prevnotes]').val(notes);
+        this.elem.addClass('has-conflict');
+        this.startCountDown();
+    },
+    startCountDown: function () {
+        this.overwrite.prop('disabled', true);
+        this.counter = this.COUNTDOWN;
+        this.overwrite.text(this.OVERWRITEC.replace('#', this.counter));
+
+        this.timer = window.setInterval(this.$.proxy(
+            function () {
+                if (--this.counter <= 0) {
+                    window.clearInterval(this.timer);
+                    this.timer = null;
+                    this.overwrite.text(this.OVERWRITE);
+                    this.overwrite.prop('disabled', false);
+                } else {
+                    this.overwrite.text(this.OVERWRITEC.replace('#', this.counter));
+                }
+            }
+        , this), 1000);
+    },
+    hideConflict: function () {
+        this.elem.removeClass('has-conflict');
     }
 };
 
