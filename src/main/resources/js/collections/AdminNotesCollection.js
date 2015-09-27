@@ -42,7 +42,6 @@ var AdminNotesCollection = {
                     }
 
                     $(document).trigger('admin-notes-collection-updated');
-                    AdminNotesListView.setList(this.plugins);
                 }, this)
         );
     },
@@ -73,7 +72,10 @@ var AdminNotesCollection = {
             this.$.proxy(
                 function () {
                     this.notes[key] = newVal.notes;
+
                     res.resolve();
+
+                    $(document).trigger('admin-notes-collection-updated');
                 }, this) ).fail(
             this.$.proxy(
                 function (val) {
@@ -82,9 +84,9 @@ var AdminNotesCollection = {
                     this.notes[key] = json.notes;
                     this.plugins[this.pos[key]].title = json.title;
 
-                    $(document).trigger('admin-notes-collection-updated');
-
                     res.reject(json.notes);
+
+                    $(document).trigger('admin-notes-collection-updated');
                 }, this) );
 
         return res;
@@ -109,10 +111,9 @@ var AdminNotesCollection = {
                     this.pos[key] = this.plugins.length;
                     this.plugins[this.pos[key]] = { key: key, title: newVal.title };
 
-                    $(document).trigger('admin-notes-collection-updated');
-
-                    AdminNotesListView.setList(this.plugins);
                     res.resolve();
+
+                    $(document).trigger('admin-notes-collection-updated');
                 }, this) ).fail(
             this.$.proxy(
                 function (val) {
@@ -121,9 +122,9 @@ var AdminNotesCollection = {
                     this.notes[key] = json.notes;
                     this.plugins[this.pos[key]].title = json.title;
 
-                    $(document).trigger('admin-notes-collection-updated');
-
                     res.reject(json.notes);
+
+                    $(document).trigger('admin-notes-collection-updated');
                 }, this) );
 
         return res;
@@ -145,10 +146,9 @@ var AdminNotesCollection = {
                 this.plugins.splice(this.pos[key], 1);
                 this.pos[key] = undefined;
 
-                $(document).trigger('admin-notes-collection-updated');
-
-                AdminNotesListView.setList(this.plugins);
                 res.resolve();
+
+                $(document).trigger('admin-notes-collection-updated');
             }, this)
         ).fail(
             this.$.proxy(function (val) {
@@ -157,9 +157,9 @@ var AdminNotesCollection = {
                 this.notes[key] = json.notes;
                 this.plugins[this.pos[key]].title = json.title;
 
-                $(document).trigger('admin-notes-collection-updated');
-
                 res.reject(json.notes);
+
+                $(document).trigger('admin-notes-collection-updated');
             }, this)
         );
 

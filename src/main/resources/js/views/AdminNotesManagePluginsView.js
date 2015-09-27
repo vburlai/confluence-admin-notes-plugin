@@ -20,7 +20,12 @@ var AdminNotesManagePluginsView = {
     init: function () {
         if (this.timer === null) {
             this.timer = window.setInterval($.proxy(this.lookForUpdates, this));
+
+            this.$(document).on('admin-notes-collection-updated', this.collectionUpdated);
         }
+    },
+    collectionUpdated: function () {
+      AdminNotesManagePluginsView.lookForUpdates();
     },
     // checks DOM for new plugin listings
     lookForUpdates: function() {
@@ -32,6 +37,12 @@ var AdminNotesManagePluginsView = {
             if (typeof self.buttons[pluginkey] == 'undefined') {
                 self.createButton(el, obj);
                 self.buttons[pluginkey] = obj;
+            } else {
+                if (self.objectUpdated(obj, self.buttons[pluginkey])) {
+                    self.buttons[pluginkey] = obj;
+
+                    self.updateButton(self.$('#'+obj.buttonId), obj);
+                }
             }
         });
     },
@@ -40,7 +51,6 @@ var AdminNotesManagePluginsView = {
         return {
             pluginkey: pluginkey,
             pluginname: this.$(el).find('.upm-plugin-name').text(),
-            elemId: this.$(el).attr('id'),
             buttonId: 'admin-notes-btn-'+pluginkey.replace(/[^a-zA-Z]/g, ''),
             hasNotes: AdminNotesCollection.hasNotes(pluginkey)
         };

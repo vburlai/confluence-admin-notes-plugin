@@ -25,7 +25,14 @@ var AdminNotesListView = {
             AdminNotesView.checkbox.after(this.elem);
 
             this.elem.on('click', '.list-item', this.clickHandler);
+
+            this.$(document).on('admin-notes-collection-updated', this.collectionUpdated);
         }
+    },
+    collectionUpdated: function () {
+        var l = AdminNotesCollection.getPlugins();
+
+        AdminNotesListView.setList(l);
     },
     clickHandler: function (event) {
         var key = $(event.target).attr('data-pluginkey');

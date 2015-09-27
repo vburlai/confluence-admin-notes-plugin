@@ -10,6 +10,7 @@
         $(document).on('admin-notes-collection-updated', function () {
             AdminNotesView.init();
             AdminNotesListView.init();
+            AdminNotesListView.collectionUpdated();
             AdminNotesManagePluginsView.init();
 
             AdminNotesDialog.init();
