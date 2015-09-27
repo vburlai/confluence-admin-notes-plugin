@@ -82,6 +82,7 @@
     text-align: center;
     font-size: 0.8em;
     background: rgb(209, 255, 208) url(images/addNotes.png) 5px 50% no-repeat;
+    min-width: 210px;
 }
 
 #admin-notes-dialog TEXTAREA {
