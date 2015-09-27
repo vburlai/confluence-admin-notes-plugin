@@ -34,7 +34,8 @@ var AdminNotesManagePluginsView = {
         this.$.each(els, function (ind, el) {
             var obj = self.createButtonObject(el);
             var pluginkey = obj.pluginkey;
-            if (typeof self.buttons[pluginkey] == 'undefined') {
+            if (typeof self.buttons[pluginkey] == 'undefined' ||
+                self.$('#' + obj.buttonId).length === 0) {
                 self.createButton(el, obj);
                 self.buttons[pluginkey] = obj;
             } else {

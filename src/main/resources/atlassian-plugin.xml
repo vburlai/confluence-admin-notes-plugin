@@ -16,6 +16,7 @@
     <!-- add our web resources -->
     <web-resource key="confluence-admin-notes-resources" name="confluence-admin-notes Web Resources">
         <dependency>com.atlassian.auiplugin:ajs</dependency>
+        <dependency>com.atlassian.auiplugin:dialog2</dependency>
         
         <resource type="download" name="confluence-admin-notes.css" location="/css/confluence-admin-notes-min.css"/>
         <resource type="download" name="AdminNotesService.js" location="/js/AdminNotesService-min.js"/>

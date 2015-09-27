@@ -20,6 +20,7 @@ var AdminNotesDialog = {
     overwrite: null,
     counter: 0,
     timer: null,
+    isShown: false,
     init: function () {
         if (this.elem === null) {
             this.elem = $('<section role="dialog" id="admin-notes-dialog" '+
@@ -37,7 +38,7 @@ var AdminNotesDialog = {
         }
     },
     collectionUpdated: function () {
-        if (this.dialog.isVisible()) {
+        if (this.isShown) {
             var notes = AdminNotesCollection.getNotes(this.pluginkey);
             if (this.pluginnotes != notes) {
                 this.showConflict(notes);
@@ -88,6 +89,7 @@ var AdminNotesDialog = {
         this.refresh();
 
         this.dialog.show();
+        this.isShown = true;
     },
     add: function (key, title) {
         this.hideConflict();
@@ -105,8 +107,10 @@ var AdminNotesDialog = {
         this.refresh();
 
         this.dialog.show();
+        this.isShown = true;
     },
     hide: function () {
+        this.isShown = false;
         this.dialog.hide();
         // reset
         this.pluginkey = '';
@@ -151,6 +155,7 @@ var AdminNotesDialog = {
                 }, this) );
     },
     showConflict: function (notes) {
+        this.pluginnotes = notes;
         this.elem.find('[name=prevnotes]').val(notes);
         this.elem.addClass('has-conflict');
         this.startCountDown();
