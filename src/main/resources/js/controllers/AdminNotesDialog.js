@@ -84,6 +84,11 @@ var AdminNotesDialog = {
     },
     hide: function () {
         this.dialog.hide();
+        // reset
+        this.pluginkey = '';
+        this.plugintitle = '';
+        this.pluginnotes = '';
+        this.refresh();
     },
     refresh: function () {
         this.elem.find('[name=pluginkey]').val(this.pluginkey);
