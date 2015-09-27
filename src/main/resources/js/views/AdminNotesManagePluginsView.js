@@ -75,12 +75,14 @@ var AdminNotesManagePluginsView = {
         btn.off('mouseenter');
         if (obj.hasNotes) {
             btn.on('mouseenter', this.$.proxy(this.hoverHandler, this));
+            btn.on('mouseleave', function () { AdminNotesTooltipView.hide(); });
         }
     },
     clickHandler: function (event) {
         var key = this.$(event.target).attr('data-pluginkey'),
             title = this.$(event.target).attr('data-pluginname');
         event.stopPropagation();
+        AdminNotesTooltipView.hide();
         if (AdminNotesCollection.hasNotes(key)) {
             AdminNotesDialog.show(key);
         } else {
