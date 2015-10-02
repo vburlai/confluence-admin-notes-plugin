@@ -8,7 +8,7 @@
  */
 var AdminNotesManagePluginsView = {
     $: AJS.$,
-    PLUGINS: '.upm-manage-type .upm-plugin',
+    PLUGINS: '#upm-content .upm-plugin',
     REFRESHRATE: 1000,
     PATH: AJS.contextPath() + '/download/resources'+
           '/name.vitaly.burlai.confluence-admin-notes:confluence-admin-notes-resources/images/',
@@ -48,7 +48,7 @@ var AdminNotesManagePluginsView = {
         });
     },
     createButtonObject: function (el) {
-        var pluginkey = this.$(el).find('.upm-plugin-key').val();
+        var pluginkey = this.$(el).attr('data-key') || this.$(el).find('.upm-plugin-key').val();
         return {
             pluginkey: pluginkey,
             pluginname: this.$(el).find('.upm-plugin-name').text(),
@@ -66,7 +66,8 @@ var AdminNotesManagePluginsView = {
                          ' id="' + obj.buttonId + '"' +
                          ' data-pluginkey="' + obj.pluginkey + '">');
         this.updateButton (btn, obj);
-        this.$(el).find('.upm-plugin-action-buttons').append(btn);
+        var container = this.$(el).find('.upm-plugin-actions');
+        container.append(btn);
     },
     updateButton: function (btn, obj) {
         btn.attr('src', this.PATH + (obj.hasNotes ?  this.ICON : this.ICON_ADD));
