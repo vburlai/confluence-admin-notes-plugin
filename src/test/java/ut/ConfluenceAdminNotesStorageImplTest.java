@@ -62,7 +62,7 @@ public class ConfluenceAdminNotesStorageImplTest extends TestCase {
 
         assertEquals("Created new entry", "{\"plugins\":\n{\"test\":\n\"test test\"}}", obj.getRawJSONConfig());
 
-        String config  = "{\"test\":\"test\",\n\"plugins\":{\"123\":\"456\"}}";
+        String config  = "{\"test\":\n\"test\",\n\"plugins\":\n{\"123\":\n\"456\"}}";
         String config2 = "{\"test\":\n\"test\",\n\"plugins\":\n{\"123\":\n\"321\"}}";
         obj.setRawJSONConfig(config);
 

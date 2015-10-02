@@ -133,10 +133,7 @@ public class ConfluenceAdminNotesStorageImpl implements ConfluenceAdminNotesStor
             plugins.put(key, to);
 
             // Adding new lines for readability
-            setRawJSONConfig(json.toJSONString()
-                             .replace("\":{", "\":\n{")
-                             .replace("\":\"", "\":\n\"")
-                             .replace("\",\"", "\",\n\""));
+            setRawJSONConfig(json.toJSONString());
 
             return true;
 
@@ -186,6 +183,9 @@ public class ConfluenceAdminNotesStorageImpl implements ConfluenceAdminNotesStor
      */
     public void setRawJSONConfig(String config) throws IOException
     {
-        FileUtils.writeStringToFile(configFile, config, "UTF-8");
+        String beautified = config.replace("\":{", "\":\n{")
+                                  .replace("\":\"", "\":\n\"")
+                                  .replace("\",\"", "\",\n\"");
+        FileUtils.writeStringToFile(configFile, beautified, "UTF-8");
     }
 }
