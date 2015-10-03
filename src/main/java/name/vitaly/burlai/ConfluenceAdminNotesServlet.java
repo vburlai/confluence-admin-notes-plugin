@@ -162,20 +162,20 @@ public class ConfluenceAdminNotesServlet extends HttpServlet {
     {
         resp.setContentType("application/json");
         try {
-            resp.getOutputStream().print(storage.getRawJSONConfig());
+            resp.getOutputStream().write(storage.getRawJSONConfig().getBytes("UTF-8"));
         } catch (IOException e) { e.printStackTrace(); }
     }
 
     private void printPluginConfig(HttpServletResponse resp, String key)
     {
-        resp.setContentType("text/plain");
+        resp.setContentType("application/json");
         try {
             if (key == null) {
-                resp.getOutputStream().print( storage.getPluginsConfig() );
+                resp.getOutputStream().write( storage.getPluginsConfig().getBytes("UTF-8") );
             } else {
                 JSONObject json = new JSONObject();
                 json.put(key, storage.getPluginConfig(key));
-                resp.getOutputStream().print(json.toString());
+                resp.getOutputStream().write(json.toString().getBytes("UTF-8"));
             }
         } catch (IOException e) { e.printStackTrace(); }
     }
