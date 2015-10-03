@@ -141,6 +141,7 @@
 
 .admin-notes-action {
     margin: 0 10px;
+    float: right;
 }
 
 #confluence-admin-notes-tooltip {

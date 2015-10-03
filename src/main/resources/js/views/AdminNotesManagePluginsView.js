@@ -66,8 +66,8 @@ var AdminNotesManagePluginsView = {
                          ' id="' + obj.buttonId + '"' +
                          ' data-pluginkey="' + obj.pluginkey + '">');
         this.updateButton (btn, obj);
-        var container = this.$(el).find('.upm-plugin-actions');
-        container.append(btn);
+        var clearer = this.$(el).find('.clearer');
+        clearer.before(btn);
     },
     updateButton: function (btn, obj) {
         btn.attr('src', this.PATH + (obj.hasNotes ?  this.ICON : this.ICON_ADD));
