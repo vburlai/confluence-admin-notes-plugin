@@ -6,6 +6,9 @@
 
 ## [Documentation](https://github.com/vburlai/confluence-admin-notes-plugin/wiki)
 
+## [Demonstration](https://www.youtube.com/watch?v=lkRYyeaQvtw)
+[![Confluence Admin Notes demo](https://raw.githubusercontent.com/vburlai/confluence-admin-notes-plugin/master/YouTube.png)](http://www.youtube.com/watch?v=lkRYyeaQvtw "Confluence Admin Notes demo")
+
 ### Notes for Plugins
 
  ![Confluence Admin Notes drop-down](https://raw.githubusercontent.com/vburlai/confluence-admin-notes-plugin/master/src/main/resources/images/screenshot1.png)
