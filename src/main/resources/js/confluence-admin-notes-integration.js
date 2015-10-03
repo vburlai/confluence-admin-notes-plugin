@@ -4,18 +4,18 @@
 
 (function($){
     $(window).bind('upmready', function() {
-
-        AdminNotesCollection.fetch();
-
-        $(document).on('admin-notes-collection-updated', function () {
+        // Requires AJS.dialog2
+        if (AJS && AJS.dialog2) {
+            // Init
             AdminNotesView.init();
             AdminNotesListView.init();
-            AdminNotesListView.collectionUpdated();
             AdminNotesTooltipView.init();
             AdminNotesManagePluginsView.init();
-
             AdminNotesDialog.init();
-        });
+
+            // Fetches data and starts timer for periodical fetching
+            AdminNotesCollection.fetch();
+        }
     });
 })(AJS.$);
 
