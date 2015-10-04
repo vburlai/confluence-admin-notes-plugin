@@ -62,11 +62,7 @@ public class ConfluenceAdminNotesStorageImpl implements ConfluenceAdminNotesStor
 
             JSONObject plugins = (JSONObject) json.get("plugins");
 
-            if (plugins == null) {
-                return "{}";
-            }
-
-            return plugins.toString();
+            return plugins == null ? "{}" : plugins.toString();
         } catch (ParseException e) { e.printStackTrace(); }
 
         return "{}";
@@ -80,14 +76,14 @@ public class ConfluenceAdminNotesStorageImpl implements ConfluenceAdminNotesStor
      */
     public String getPluginConfig(String key)
     {
+        if(key == null || key.isEmpty()) {
+            return getPluginsConfig();
+        }
+
         try {
             JSONObject json = (JSONObject) parser.parse(getRawJSONConfig());
 
             JSONObject plugins = (JSONObject) json.get("plugins");
-
-            if(key.isEmpty()) {
-                return plugins.toJSONString();
-            }
 
             return getPluginConfig(key, plugins);
 
@@ -132,7 +128,6 @@ public class ConfluenceAdminNotesStorageImpl implements ConfluenceAdminNotesStor
 
             plugins.put(key, to);
 
-            // Adding new lines for readability
             setRawJSONConfig(json.toJSONString());
 
             return true;
@@ -156,7 +151,10 @@ public class ConfluenceAdminNotesStorageImpl implements ConfluenceAdminNotesStor
             JSONObject json = (JSONObject) parser.parse(getRawJSONConfig());
 
             JSONObject plugins = (JSONObject) json.get("plugins");
-            assert plugins != null;
+
+            if (plugins == null) {
+                return false;
+            }
 
             // concurrency check
             if ( ! getPluginConfig(key, plugins).equals(value) ) {
