@@ -7,7 +7,7 @@ package name.vitaly.burlai;
 import com.atlassian.confluence.security.PermissionManager;
 import com.atlassian.confluence.user.AuthenticatedUserThreadLocal;
 import com.atlassian.confluence.user.ConfluenceUser;
-import com.atlassian.json.jsonorg.JSONObject;
+import org.json.simple.JSONObject;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -98,23 +98,22 @@ public class ConfluenceAdminNotesServlet extends HttpServlet {
             url = url.substring(0, url.length() - 1);
         }
 
-        if(url.startsWith("plugins/")) {
+        if(url.startsWith("plugins/") && url.length() > "plugins/".length()) {
             String pluginkey = url.substring("plugins/".length());
             String from = req.getParameter("from");
             String to = req.getParameter("to");
 
-            if (storage.updatePluginConfig(pluginkey, from, to)) {
+            if (from != null && to != null &&
+                storage.updatePluginConfig(pluginkey, from, to)) {
                 resp.setStatus(HttpServletResponse.SC_OK);
             } else {
                 resp.setStatus(HttpServletResponse.SC_CONFLICT);
                 // Let font-end know current value that has caused conflict
                 printPluginConfig(resp, pluginkey);
             }
-
-            return;
+        } else {
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
-
-        resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
     }
 
     public void doDelete (HttpServletRequest req, HttpServletResponse resp) throws IOException{
@@ -135,22 +134,21 @@ public class ConfluenceAdminNotesServlet extends HttpServlet {
             url = url.substring(0, url.length() - 1);
         }
 
-        if(url.startsWith("plugins/")) {
+        if(url.startsWith("plugins/") && url.length() > "plugins/".length()) {
             String pluginkey = url.substring("plugins/".length());
             String value = req.getParameter("value");
 
-            if (storage.removePluginConfig(pluginkey, value)) {
+            if (value != null &&
+                storage.removePluginConfig(pluginkey, value)) {
                 resp.setStatus(HttpServletResponse.SC_OK);
             } else {
                 resp.setStatus(HttpServletResponse.SC_CONFLICT);
                 // Let font-end know current value that was not deleted
                 printPluginConfig(resp, pluginkey);
             }
-
-            return;
+        } else {
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
-
-        resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
     }
 
     private boolean isConfluenceAdmin() {
