@@ -3,34 +3,43 @@
  */
 
 /**
- * Button with indication of the number of plugins
+ * Button with indication of the number of plugin notes, used by AdminNotesListView
  *
- * @type {{$: jQuery, count: number, countSpan: null, elem: null, checkbox: null, init: Function, setCount: Function, getCount: Function}}
  */
 var AdminNotesView = {
     $: AJS.$,
+    UPM_MORE_ACTIONS: '#upm-container .upm-more-actions',
     count: 0,
     countSpan: null,
     elem: null,
     checkbox: null,
+
     init: function () {
         if (this.elem === null) {
-            this.countSpan = this.$('<div class="count">' + this.getCount() + '</div>');
-            if (this.getCount() === 0) {
+            this.countSpan = this.$('<div class="count">' + this.count + '</div>');
+            if (this.count === 0) {
                 this.countSpan.addClass('invisible');
             }
-            this.elem = this.$('<label for="confluence-admin-notes-list-shown" id="confluence-admin-notes" title="Admin Notes" />');
+
+            this.elem = this.$('<label for="confluence-admin-notes-list-shown"' +
+                               ' id="confluence-admin-notes"' +
+                               ' title="Admin Notes" />');
             this.elem.append(this.countSpan);
-            this.elem.appendTo('#upm-content .upm-more-actions');
+
+            this.elem.appendTo(this.UPM_MORE_ACTIONS);
 
             this.checkbox = AJS.$('<input type="checkbox" id="confluence-admin-notes-list-shown" />');
             this.elem.after(this.checkbox);
         }
     },
-    setCount: function (c) {
-        this.count = c;
+
+    /**
+     * Update count display, called from AdminNotesListView
+     */
+    setCount: function (count) {
+        this.count = count;
         if (this.countSpan) {
-            if (c === 0) {
+            if (count === 0) {
                 this.countSpan.addClass('invisible');
             } else {
                 this.countSpan.removeClass('invisible');
@@ -39,12 +48,17 @@ var AdminNotesView = {
         }
 
     },
-    getCount: function () {
-        return this.count;
-    },
+
+    /**
+     * Hides AdminNotesListView
+     */
     hideList: function () {
         this.checkbox.prop('checked', false);
     },
+
+    /**
+     * Shows AdminNotesListView
+     */
     showList: function () {
         this.checkbox.prop('checked', true);
     }
