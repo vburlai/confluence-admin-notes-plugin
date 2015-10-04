@@ -15,7 +15,7 @@
     </organization>
 
     <name>Confluence Admin Notes</name>
-    <description>Add notes in Confluence administration area for yourself or to share with colleagues</description>
+    <description>Add notes in Confluence administration area for yourself or to share with colleagues. Visit 'Manage Add-ons' section to start adding notes.</description>
     <packaging>atlassian-plugin</packaging>
 
     <scm>
