@@ -1,3 +1,4 @@
+/* MAIN ICON */
 #confluence-admin-notes {
     display: inline-block;
     background: transparent url('images/mainIcon.png') 0 0 no-repeat;
@@ -21,10 +22,16 @@
     visibility: hidden;
 }
 
+
+
+
+/* DROP-DOWN LIST */
+/* a checkbox to remember state */
 #confluence-admin-notes-list-shown {
     display: none;
 }
 
+/* CSS2 selector supported by IE7+ */
 #confluence-admin-notes-list-shown:checked + #confluence-admin-notes-list {
     display: block;
 }
@@ -65,6 +72,7 @@
     background-color: #f0f0f0;
 }
 
+/* Background-size is IE9+ */
 #confluence-admin-notes-list .list-item:before {
     background: transparent url('images/notes.png') 0 0 no-repeat;
     background-size: 16px 16px;
@@ -85,6 +93,29 @@
     min-width: 210px;
 }
 
+
+
+
+
+/* ADMIN NOTES DIALOG */
+#admin-notes-dialog TEXTAREA {
+    height: 150px;
+    width: 97%;
+    margin: 0 1%;
+    font-size: 1.1em;
+}
+
+#admin-notes-dialog .aui-dialog2-footer-hint {
+    visibility: hidden;
+}
+
+#admin-notes-dialog .title {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Conflict indicator */
 #admin-notes-dialog .conflict {
     border-radius: 5px;
     background-color: rgb(255, 229, 234);
@@ -94,19 +125,8 @@
     display: none;
 }
 
-#admin-notes-dialog TEXTAREA {
-    height: 150px;
-    width: 97%;
-    margin: 0 1%;
-    font-size: 1.1em;
-}
-
 #admin-notes-dialog .conflict TEXTAREA {
     opacity: 0.8;
-}
-
-#admin-notes-dialog .aui-dialog2-footer-hint {
-    visibility: hidden;
 }
 
 #admin-notes-dialog.has-conflict .aui-dialog2-footer-hint {
@@ -121,6 +141,7 @@
     display: block;
 }
 
+/* Overwrite button */
 #admin-notes-dialog #dialog-overwrite-button {
     display: none;
 }
@@ -133,17 +154,21 @@
     display:none;
 }
 
-#admin-notes-dialog .title {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin: 0;
-}
 
+
+
+
+/* MANAGE ADD-ONS ICON */
 .admin-notes-action {
     margin: 0 10px;
     float: right;
 }
 
+
+
+
+
+/* ADMIN NOTES TOOLTIP */
 #confluence-admin-notes-tooltip {
     position: absolute;
     display: none;
