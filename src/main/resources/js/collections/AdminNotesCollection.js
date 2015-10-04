@@ -8,7 +8,6 @@
  * Uses the following format
  *    { title: "Plugin title", notes: "Plugin notes" }
  *
- * @type {{$: jQuery, plugins: Array, notes: {}, titles: {}, fetch: Function, save: Function}}
  */
 var AdminNotesCollection = {
     $: AJS.$,
@@ -18,40 +17,14 @@ var AdminNotesCollection = {
     notes: {},
     // Plugin titles { 'plugin key': 'title' }
     titles: {},
-    // positions in plugins array
+    // positions in plugins array { 'plugin key': index }
     pos: {},
-    timer: null,
+    timer: undefined,
     REFRESH: 5000,
-    /**
-     * Reads admin notes and updates AdminNotesListView
-     */
-    fetch: function () {
-        if (this.timer === null) {
-            this.timer = window.setInterval(this.$.proxy(this.fetch, this), this.REFRESH);
-        }
-        AdminNotesService.getPlugins().done(
-            this.$.proxy(
-                function (data) {
-                    this.plugins = [];
-                    this.notes = {};
-                    this.titles = {};
-                    this.pos = {};
-                    for (var key in data) {
-                        if (data.hasOwnProperty(key)) {
-                            var json = JSON.parse(data[key]);
-                            this.pos[key] = this.plugins.length;
-                            this.plugins[this.plugins.length] = { key: key, title: json['title'] || key };
-                            this.notes[key] = json['notes'];
-                            this.titles[key] = json['title'] || key;
-                        }
-                    }
 
-                    $(document).trigger('admin-notes-collection-updated');
-                }, this)
-        );
-    },
+    /** getters */
     getTitle: function (key) {
-        return this.titles[key];
+        return this.titles[key] || key;
     },
     getNotes: function (key) {
         return this.notes[key] || '';
@@ -62,6 +35,46 @@ var AdminNotesCollection = {
     getPlugins: function () {
         return this.plugins;
     },
+
+    /**
+     * Initial setup and fetching data
+     */
+    init: function () {
+        if (typeof this.timer === "undefined") {
+            this.timer = window.setInterval(this.$.proxy(this.fetch, this), this.REFRESH);
+        }
+        this.fetch();
+    },
+    fetch: function () {
+        AdminNotesService.getPlugins().done(this.$.proxy( this.resetWithData, this ));
+    },
+    // @TODO Hide private methods
+    /**
+     * [Private] Re-init collection with received data
+     */
+    resetWithData: function (data) {
+        this.plugins = [];
+        this.notes = {};
+        this.titles = {};
+        this.pos = {};
+        for (var key in data) {
+            if (data.hasOwnProperty(key)) {
+                try {
+                    var json = JSON.parse(data[key]);
+                    this.pos[key] = this.plugins.length;
+                    this.plugins[this.plugins.length] = {key: key, title: json['title'] || key};
+                    this.notes[key] = json['notes']; // can be undefined, .hasNotes will detect it
+                    this.titles[key] = json['title'] || key;
+                } catch (e) {}
+            }
+        }
+
+        var $ = this.$;
+        window.setTimeout(function () {
+            $(document).trigger('admin-notes-collection-updated');
+        }, 0);
+    },
+
     /**
      * Saves updated notes, use .add() for adding
      *
@@ -73,26 +86,12 @@ var AdminNotesCollection = {
         var prevVal = JSON.stringify({ title: this.titles[key], notes: this.notes[key] });
         var newVal = { title: this.titles[key], notes: notes };
 
-        AdminNotesService.set(key, prevVal, JSON.stringify(newVal) ).done(
-            this.$.proxy(
-                function () {
-                    this.notes[key] = newVal.notes;
-
-                    res.resolve();
-
-                    $(document).trigger('admin-notes-collection-updated');
-                }, this) ).fail(
-            this.$.proxy(
-                function (val) {
-                    var json = JSON.parse(val);
-                    this.titles[key] = json.title;
-                    this.notes[key] = json.notes;
-                    this.plugins[this.pos[key]].title = json.title;
-
-                    res.reject(json.notes);
-
-                    $(document).trigger('admin-notes-collection-updated');
-                }, this) );
+        AdminNotesService.set(key, prevVal, JSON.stringify(newVal)
+        ).done(
+            this.$.proxy(this.updateSuccessHandler, this, res, key, newVal.title, newVal.notes)
+        ).fail(
+            this.$.proxy(this.updateFailureHandler, this, res, key)
+        );
 
         return res;
     },
@@ -108,29 +107,12 @@ var AdminNotesCollection = {
         var res = this.$.Deferred();
 
         var newVal = { title: title, notes: notes };
-        AdminNotesService.set(key, '', JSON.stringify(newVal) ).done(
-            this.$.proxy(
-                function () {
-                    this.titles[key] = newVal.title;
-                    this.notes[key] = newVal.notes;
-                    this.pos[key] = this.plugins.length;
-                    this.plugins[this.pos[key]] = { key: key, title: newVal.title };
-
-                    res.resolve();
-
-                    $(document).trigger('admin-notes-collection-updated');
-                }, this) ).fail(
-            this.$.proxy(
-                function (val) {
-                    var json = JSON.parse(val);
-                    this.titles[key] = json.title;
-                    this.notes[key] = json.notes;
-                    this.plugins[this.pos[key]].title = json.title;
-
-                    res.reject(json.notes);
-
-                    $(document).trigger('admin-notes-collection-updated');
-                }, this) );
+        AdminNotesService.set(key, '', JSON.stringify(newVal)
+        ).done(
+            this.$.proxy(this.updateSuccessHandler, this, res, key, newVal.title, newVal.notes)
+        ).fail(
+            this.$.proxy(this.updateFailureHandler, this, res, key)
+        );
 
         return res;
     },
@@ -144,31 +126,77 @@ var AdminNotesCollection = {
         var res = this.$.Deferred();
 
         var prevVal = JSON.stringify({ title: this.titles[key], notes: this.notes[key] });
-        AdminNotesService.remove(key, prevVal).done(
-            this.$.proxy(function () {
-                this.titles[key] = undefined;
-                this.notes[key] = undefined;
-                this.plugins.splice(this.pos[key], 1);
-                this.pos[key] = undefined;
-
-                res.resolve();
-
-                $(document).trigger('admin-notes-collection-updated');
-            }, this)
+        AdminNotesService.remove(key, prevVal
+        ).done(
+            this.$.proxy(this.removeSuccessHandler, this, res, key)
         ).fail(
-            this.$.proxy(function (val) {
-                var json = JSON.parse(val);
-                this.titles[key] = json.title;
-                this.notes[key] = json.notes;
-                this.plugins[this.pos[key]].title = json.title;
-
-                res.reject(json.notes);
-
-                $(document).trigger('admin-notes-collection-updated');
-            }, this)
+            this.$.proxy(this.updateFailureHandler, this, res, key)
         );
 
         return res;
+    },
+    /**
+     * [Private] Reset existing entry with given data or add new entry to the list
+     */
+    resetEntryWithData: function (key, title, notes) {
+        this.titles[key] = title;
+        this.notes[key] = notes;
+        if (this.pos[key]) {
+            // existing key
+            this.plugins[this.pos[key]].title = title;
+        } else {
+            // new key added
+            this.pos[key] = this.plugins.length;
+            this.plugins[this.pos[key]] = {key: key, title: title};
+        }
+
+        var $ = this.$;
+        window.setTimeout(function () {
+            $(document).trigger('admin-notes-collection-updated');
+        }, 0);
+    },
+    /**
+     * [Private] Remove entry with given key from the collection
+     */
+    removeEntry: function (key) {
+        this.titles[key] = undefined;
+        this.notes[key] = undefined;
+        this.plugins.splice(this.pos[key], 1);
+        this.pos[key] = undefined;
+
+        var $ = this.$;
+        window.setTimeout(function () {
+            $(document).trigger('admin-notes-collection-updated');
+        }, 0);
+    },
+    /**
+     * [Private] Handles success of add/save
+     */
+    updateSuccessHandler: function (res, key, title, notes) {
+        this.resetEntryWithData(key, title, notes);
+
+        res.resolve();
+    },
+    /**
+     * [Private] Handles success of remove
+     */
+    removeSuccessHandler: function (res, key) {
+        this.removeEntry(key);
+
+        res.resolve();
+    },
+    /**
+     * [Private] Handles failure of add/save/delete
+     */
+    updateFailureHandler: function (res, key, val) {
+        var currentNotes;
+        try {
+            var json = JSON.parse(val);
+
+            this.resetEntryWithData(key, json.title, json.notes);
+        } catch (e) {}
+
+        res.reject(currentNotes);
     }
 };
 
