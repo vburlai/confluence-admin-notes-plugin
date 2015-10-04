@@ -14,13 +14,13 @@ var AdminNotesDialog = {
     elem: null,
     dialog: null,
     // Current plugin key
-    pluginkey: '',
+    pluginKey: '',
     // Current plugin title
-    plugintitle: '',
+    pluginTitle: '',
     // Current plugin notes
-    pluginnotes: '',
+    pluginNotes: '',
     // Adding notes (true) or editing (false)
-    pluginnew: false,
+    pluginNew: false,
     // Overwrite button (show countdown)
     overwrite: null,
     // Countdown
@@ -59,8 +59,8 @@ var AdminNotesDialog = {
      */
     collectionUpdated: function () {
         if (this.isShown) {
-            var notes = AdminNotesCollection.getNotes(this.pluginkey);
-            if (this.pluginnotes != notes) {
+            var notes = AdminNotesCollection.getNotes(this.pluginKey);
+            if (this.pluginNotes != notes) {
                 this.showConflict(notes);
             }
         }
@@ -80,9 +80,9 @@ var AdminNotesDialog = {
         html += '  Warning! While you were editing, the notes were updated to the following:<br>';
         html += '  <textarea name="prevnotes" readonly="readonly"></textarea>';
         html += '  </div>';
-        html += '  <p class="title">Plugin: <span class="plugintitle"></span></p>';
-        html += '  <input type="hidden" name="pluginkey" value="">';
-        html += '  <input type="hidden" name="plugintitle" value="">';
+        html += '  <p class="title">Plugin: <span class="plugin-title"></span></p>';
+        html += '  <input type="hidden" name="plugin-key" value="">';
+        html += '  <input type="hidden" name="plugin-title" value="">';
         html += '  <textarea name="notes"></textarea>';
         html += '</div>';
         html += '<footer class="aui-dialog2-footer">';
@@ -111,18 +111,18 @@ var AdminNotesDialog = {
         this.hideConflict();
         AdminNotesView.hideList();
 
-        this.pluginkey = key;
+        this.pluginKey = key;
 
         if (typeof title == 'undefined') {
             // Editing existing notes
-            this.plugintitle = AdminNotesCollection.getTitle(key);
-            this.pluginnotes = AdminNotesCollection.getNotes(key);
-            this.pluginnew = false;
+            this.pluginTitle = AdminNotesCollection.getTitle(key);
+            this.pluginNotes = AdminNotesCollection.getNotes(key);
+            this.pluginNew = false;
         } else {
             // Add new notes
-            this.plugintitle = title;
-            this.pluginnotes = '';
-            this.pluginnew = true;
+            this.pluginTitle = title;
+            this.pluginNotes = '';
+            this.pluginNew = true;
         }
 
         if (this.elem === null) {
@@ -142,9 +142,10 @@ var AdminNotesDialog = {
         this.isShown = false;
         this.dialog.hide();
         // reset
-        this.pluginkey = '';
-        this.plugintitle = '';
-        this.pluginnotes = '';
+        this.pluginKey = '';
+        this.pluginTitle = '';
+        this.pluginNotes = '';
+        this.pluginNew = false;
         this.refresh();
     },
 
@@ -152,23 +153,23 @@ var AdminNotesDialog = {
      * Refresh dialog fields
      */
     refresh: function () {
-        this.elem.find('.plugintitle').text(this.plugintitle);
+        this.elem.find('.plugin-title').text(this.pluginTitle);
 
-        this.elem.find('[name=pluginkey]').val(this.pluginkey);
-        this.elem.find('[name=plugintitle]').val(this.plugintitle);
-        this.elem.find('[name=notes]').val(this.pluginnotes);
+        this.elem.find('[name=plugin-key]').val(this.pluginKey);
+        this.elem.find('[name=plugin-title]').val(this.pluginTitle);
+        this.elem.find('[name=notes]').val(this.pluginNotes);
     },
 
     /**
      * Save/submit values
      */
     save: function () {
-        var key = this.elem.find('[name=pluginkey]').val(),
-            title = this.elem.find('[name=plugintitle]').val(),
+        var key = this.elem.find('[name=plugin-key]').val(),
+            title = this.elem.find('[name=plugin-title]').val(),
             notes = this.elem.find('[name=notes]').val(),
             deferred;
 
-        if (this.pluginnew) {
+        if (this.pluginNew) {
             if (notes.trim().length) {
                 deferred = AdminNotesCollection.add(key, title, notes);
             } else {
@@ -192,7 +193,7 @@ var AdminNotesDialog = {
      * Shows 'Notes were updated' banner and data
      */
     showConflict: function (notes) {
-        this.pluginnotes = notes;
+        this.pluginNotes = notes;
         this.elem.find('[name=prevnotes]').val(notes);
         this.elem.addClass('has-conflict');
         this.startCountDown();
