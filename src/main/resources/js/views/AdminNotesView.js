@@ -44,7 +44,7 @@ var AdminNotesView = {
             } else {
                 this.countSpan.removeClass('invisible');
             }
-            this.countSpan.text(c);
+            this.countSpan.text(count);
         }
 
     },

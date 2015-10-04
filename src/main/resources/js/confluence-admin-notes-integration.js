@@ -13,8 +13,8 @@
             AdminNotesManagePluginsView.init();
             AdminNotesDialog.init();
 
-            // Fetches data and starts timer for periodical fetching
-            AdminNotesCollection.fetch();
+            // Initial data fetch and starting timer for periodical updates
+            AdminNotesCollection.init();
         }
     });
 })(AJS.$);

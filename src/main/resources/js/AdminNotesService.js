@@ -2,6 +2,9 @@
  * Copyright (c) 2015 Vitaly Burlai <vitaly.burlai@gmail.com>
  */
 
+/**
+ * Main communication point from UI to REST-full back-end storage
+ */
 var AdminNotesService = {
     '$':         AJS.$, // jQuery
     'urlPrefix': AJS.contextPath() + '/plugins/servlet/confluence-admin-notes/plugins/'
@@ -10,7 +13,7 @@ var AdminNotesService = {
 /**
  * Get notes for all plugins
  *
- * @returns the deferred object, .done function get the data
+ * @returns the deferred object, .done function gets the data
  */
 AdminNotesService.getPlugins = function () {
     var deferred = this.$.Deferred();
@@ -70,8 +73,12 @@ AdminNotesService.set = function (pluginKey, from, to) {
             }
         })
         .fail(function (xhr, status) {
-            var obj = JSON.parse(xhr.responseText);
-            deferred.reject(typeof obj == "object" ? obj[pluginKey] : null);
+            var res = null;
+            try {
+                var obj = JSON.parse(xhr.responseText);
+                res = typeof obj == "object" ? obj[pluginKey] : null;
+            } catch (e) {};
+            deferred.reject(res);
         });
 
     return deferred;
@@ -101,8 +108,12 @@ AdminNotesService.remove = function (pluginKey, value) {
             }
         })
         .fail(function (xhr, status) {
-            var obj = JSON.parse(xhr.responseText);
-            deferred.reject(typeof obj == "object" ? obj[pluginKey] : null);
+            var res = null;
+            try {
+                var obj = JSON.parse(xhr.responseText);
+                res = typeof obj == "object" ? obj[pluginKey] : null;
+            } catch (e) {};
+            deferred.reject(res);
         });
 
     return deferred;
