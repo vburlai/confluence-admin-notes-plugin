@@ -7,8 +7,8 @@ package name.vitaly.burlai;
 public interface ConfluenceAdminNotesStorage
 {
     String getRawJSONConfig();
-    String getPluginsConfig();
-    String getPluginConfig(String key);
-    boolean updatePluginConfig(String key, String from, String to);
-    boolean removePluginConfig(String key, String value);
+    String getConfigSection(String section);
+    String getConfigSection(String section, String key);
+    boolean updateConfigSection(String section, String key, String from, String to);
+    boolean removeConfigSection(String section, String key, String value);
 }

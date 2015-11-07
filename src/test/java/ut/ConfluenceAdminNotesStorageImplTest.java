@@ -37,13 +37,13 @@ public class ConfluenceAdminNotesStorageImplTest extends TestCase {
     public void testGetPluginsConfig() throws Exception {
         obj.setRawJSONConfig("{\"test\":\"test\"}");
 
-        assertEquals("Empty config file", "{}", obj.getPluginsConfig());
+        assertEquals("Empty config file", "{}", obj.getConfigSection("plugins"));
 
         String plugins = "{\"abc\":\"efd\"}";
         String json = "{\"test\":\"test\",\n\"plugins\":"+plugins+"}";
         obj.setRawJSONConfig(json);
 
-        assertEquals("Getting 'plugins' part of config", plugins, obj.getPluginsConfig());
+        assertEquals("Getting 'plugins' part of config", plugins, obj.getConfigSection("plugins"));
     }
 
     public void testGetPluginConfig() throws Exception {
@@ -51,14 +51,14 @@ public class ConfluenceAdminNotesStorageImplTest extends TestCase {
         String json = "{\"test\":\"test\",\n\"plugins\":"+plugins+"}";
         obj.setRawJSONConfig(json);
 
-        assertEquals("Getting first record", "def", obj.getPluginConfig("abc"));
-        assertEquals("Getting second record", "456", obj.getPluginConfig("123"));
+        assertEquals("Getting first record", "def", obj.getConfigSection("plugins", "abc"));
+        assertEquals("Getting second record", "456", obj.getConfigSection("plugins", "123"));
     }
 
     public void testUpdatePluginConfig() throws Exception {
         obj.setRawJSONConfig("{}");
 
-        obj.updatePluginConfig("test", "", "test test");
+        obj.updateConfigSection("plugins", "test", "", "test test");
 
         assertEquals("Created new entry", "{\"plugins\":\n{\"test\":\n\"test test\"}}", obj.getRawJSONConfig());
 
@@ -66,11 +66,11 @@ public class ConfluenceAdminNotesStorageImplTest extends TestCase {
         String config2 = "{\"test\":\n\"test\",\n\"plugins\":\n{\"123\":\n\"321\"}}";
         obj.setRawJSONConfig(config);
 
-        obj.updatePluginConfig("123", "", "321");
+        obj.updateConfigSection("plugins", "123", "", "321");
 
         assertEquals("Correct previous value should be specified", config, obj.getRawJSONConfig());
 
-        obj.updatePluginConfig("123", "456", "321");
+        obj.updateConfigSection("plugins", "123", "456", "321");
 
         assertEquals("Record updated successfully", config2, obj.getRawJSONConfig());
     }
@@ -80,15 +80,15 @@ public class ConfluenceAdminNotesStorageImplTest extends TestCase {
         String json = "{\"test\":\"test\",\"plugins\":"+plugins+"}";
         obj.setRawJSONConfig(json);
 
-        assertEquals("Initial state set", plugins, obj.getPluginsConfig());
+        assertEquals("Initial state set", plugins, obj.getConfigSection("plugins"));
 
-        obj.removePluginConfig("abc", "e");
+        obj.removeConfigSection("plugins", "abc", "e");
 
-        assertEquals("Removal should have the current value in params", plugins, obj.getPluginsConfig());
+        assertEquals("Removal should have the current value in params", plugins, obj.getConfigSection("plugins"));
 
-        obj.removePluginConfig("abc", "def");
+        obj.removeConfigSection("plugins", "abc", "def");
 
-        assertEquals("Successful removal", "{\"123\":\"456\"}", obj.getPluginsConfig());
+        assertEquals("Successful removal", "{\"123\":\"456\"}", obj.getConfigSection("plugins"));
     }
 }
 

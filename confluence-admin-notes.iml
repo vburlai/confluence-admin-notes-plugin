@@ -247,6 +247,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: net.sf.cssbox:jstyleparser:1.16-atlassian-1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.guava:guava:11.0.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.atlassian.fugue:fugue:2.2.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.code.gson:gson:1.6" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.atlassian.http:atlassian-http:1.0.10" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.atlassian.instrumentation:atlassian-instrumentation-core:1.9.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.atlassian.tenancy:atlassian-tenancy-api:1.4.1" level="project" />

@@ -7,7 +7,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>name.vitaly.burlai</groupId>
     <artifactId>confluence-admin-notes</artifactId>
-    <version>1.2</version>
+    <version>1.4</version>
 
     <organization>
         <name>Vitalii Burlai</name>
