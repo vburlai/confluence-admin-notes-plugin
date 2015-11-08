@@ -7,6 +7,10 @@
     cursor: pointer;
 }
 
+#admin-heading-container #confluence-admin-notes {
+    float: right;
+}
+
 #confluence-admin-notes .count {
     background: #fff933;
     margin: 9px 0 0 20px;
@@ -46,6 +50,14 @@
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
     background-color: #fff;
     z-index: 100;
+}
+
+#admin-heading-container {
+    position: relative;
+}
+
+#admin-heading-container #confluence-admin-notes-list {
+    margin-top: 30px;
 }
 
 #confluence-admin-notes-list .loading{

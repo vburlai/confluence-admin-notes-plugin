@@ -9,7 +9,8 @@
 var AdminNotesManageListView = {
     $: AJS.$,
     ELEMENTS: {
-      'plugins': '#upm-content .upm-plugin',
+        'plugins': '#upm-content .upm-plugin',
+        'macros': '#user-macros-admin tr[data-macro-key]'
     },
     REFRESH_RATE: 500,
     // path to icons
@@ -92,7 +93,14 @@ var AdminNotesManageListView = {
         }
         
         if (this.context === 'macros') {
-        // TODO macros
+            var macroKey = this.$(el).attr('data-macro-key');
+
+            return {
+                key: macroKey,
+                name: this.$(el).find('TD:first').text(),
+                buttonId: 'admin-notes-btn-'+macroKey.replace(/[^a-zA-Z]/g, ''),
+                hasNotes: AdminNotesCollection.hasNotes(macroKey)
+            };
         }
     },
 
@@ -128,7 +136,8 @@ var AdminNotesManageListView = {
 	        clearer.before(btn);
         }
         if (this.context === 'macros') {
-        // TODO macros
+            var lastCell = this.$(el).find('td:last');
+            lastCell.append(btn);
         }
     },
 

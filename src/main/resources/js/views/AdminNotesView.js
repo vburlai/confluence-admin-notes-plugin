@@ -9,8 +9,8 @@
 var AdminNotesView = {
     $: AJS.$,
     INTEGRATION: {
-      'plugins': '#upm-container .upm-more-actions'
-      // TODO: macros
+        'plugins': '#upm-container .upm-more-actions',
+        'macros': '#admin-heading-container'
     },
     count: 0,
     countSpan: null,
