@@ -23,7 +23,7 @@
         <resource type="download" name="views/AdminNotesView.js" location="/js/views/AdminNotesView-min.js"/>
         <resource type="download" name="views/AdminNotesListView.js" location="/js/views/AdminNotesListView-min.js"/>
         <resource type="download" name="views/AdminNotesTooltipView.js" location="/js/views/AdminNotesTooltipView-min.js"/>
-        <resource type="download" name="views/AdminNotesManagePluginsView.js" location="/js/views/AdminNotesManagePluginsView-min.js"/>
+        <resource type="download" name="views/AdminNotesManageListView.js" location="/js/views/AdminNotesManageListView-min.js"/>
         <resource type="download" name="collections/AdminNotesCollection.js" location="/js/collections/AdminNotesCollection-min.js"/>
         <resource type="download" name="controllers/AdminNotesDialog.js" location="/js/controllers/AdminNotesDialog-min.js"/>
         <resource type="download" name="confluence-admin-notes-integration.js" location="/js/confluence-admin-notes-integration-min.js"/>

@@ -3,19 +3,24 @@
  */
 
 /**
- * Button with indication of the number of plugin notes, used by AdminNotesListView
+ * Button with indication of the number of notes, used by AdminNotesListView
  *
  */
 var AdminNotesView = {
     $: AJS.$,
-    UPM_MORE_ACTIONS: '#upm-container .upm-more-actions',
+    INTEGRATION: {
+      'plugins': '#upm-container .upm-more-actions'
+      // TODO: macros
+    },
     count: 0,
     countSpan: null,
     elem: null,
     checkbox: null,
+    context: 'plugins',
 
-    init: function () {
+    init: function (context) {
         if (this.elem === null) {
+            this.context = context;
             this.countSpan = this.$('<div class="count">' + this.count + '</div>');
             if (this.count === 0) {
                 this.countSpan.addClass('invisible');
@@ -25,8 +30,10 @@ var AdminNotesView = {
                                ' id="confluence-admin-notes"' +
                                ' title="Admin Notes" />');
             this.elem.append(this.countSpan);
+            
+            
 
-            this.elem.appendTo(this.UPM_MORE_ACTIONS);
+            this.elem.appendTo(this.INTEGRATION[this.context]);
 
             this.checkbox = AJS.$('<input type="checkbox" id="confluence-admin-notes-list-shown" />');
             this.elem.after(this.checkbox);

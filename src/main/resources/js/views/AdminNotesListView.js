@@ -3,7 +3,7 @@
  */
 
 /**
- * Drop-down list of plugins which have notes
+ * Drop-down list of entries which have notes
  *
  */
 var AdminNotesListView = {
@@ -11,15 +11,23 @@ var AdminNotesListView = {
     elem: null,
     list: [],
     listDiv: null,
+    // title depending on context
+    titles: {
+      'plugins': 'plugin',
+      'macros': 'macro'
+    },
+    // context, 'plugins' or 'macros'
+    context: 'plugins',
 
-    init: function () {
+    init: function (context) {
         if (this.elem === null) {
+            this.context = context;
             this.listDiv = this.$('<div class="list"></div>');
             this.elem = this.$('<div id="confluence-admin-notes-list" class="ldng">'+
                                '<span class="loading">Loading...</span>'+
                                 '</div>');
             this.elem.append(this.listDiv);
-            this.elem.append('<div class="add">Click \'Notes\' button next to<br> a plugin name to add notes.</div>');
+            this.elem.append('<div class="add">Click \'Notes\' button next to<br> a ' + (this.titles[this.context] || '') + ' name to add notes.</div>');
 
             // Depends on AdminNotesView
             // @TODO: Maybe combine two views into one
@@ -38,16 +46,16 @@ var AdminNotesListView = {
      * Triggered on collection updates, view gets refreshed
      */
     collectionUpdated: function () {
-        var l = AdminNotesCollection.getPlugins();
+        var l = AdminNotesCollection.getEntries();
 
         this.resetList(l);
     },
 
     /**
-     * Click on .list-item (which has 'data-pluginkey' attribute)
+     * Click on .list-item (which has 'data-key' attribute)
      */
     clickHandler: function (event) {
-        var key = $(event.target).attr('data-pluginkey');
+        var key = $(event.target).attr('data-key');
 
         if (key) {
             AdminNotesDialog.show(key);
@@ -85,7 +93,7 @@ var AdminNotesListView = {
      * @param el object of {key: '' , title: ''}
      */
     renderElement: function (el) {
-        return '<div class="list-item" data-pluginkey="' + el.key + '">' + el.title + '</div>';
+        return '<div class="list-item" data-key="' + el.key + '">' + el.title + '</div>';
     }
 };
 

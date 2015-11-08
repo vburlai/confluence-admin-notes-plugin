@@ -11,7 +11,7 @@ var AdminNotesTooltipView = {
     RIGHT_OFFSET: -30,
     elem: null,
     text: null,
-    pluginKey: null,
+    key: null,
     timer: null,
     DELAY: 300,
 
@@ -36,7 +36,7 @@ var AdminNotesTooltipView = {
      * Triggered when collection is updated
      */
     collectionUpdated: function () {
-        if (this.pluginKey) {
+        if (this.key) {
             this.refresh();
         }
     },
@@ -48,7 +48,7 @@ var AdminNotesTooltipView = {
         if (this.timer === null ) {
             this.timer = window.setTimeout(this.$.proxy(function () {
                 this.timer = null;
-                this.pluginKey = null;
+                this.key = null;
                 this.elem.hide();
             }, this), this.DELAY);
         }
@@ -68,12 +68,12 @@ var AdminNotesTooltipView = {
      * Shows the tooltip under the specified element
      *
      * @param el  element under which the tooltip is placed
-     * @param pluginKey  plugin key to show corresponding notes
+     * @param key entry key to show corresponding notes
      */
-    show: function (el, pluginKey) {
+    show: function (el, key) {
         this.cancelHide();
 
-        this.pluginKey = pluginKey;
+        this.key = key;
 
         // set position
         this.elem.css('top', el.offset().top + el.height()>>1 + 'px');
@@ -89,7 +89,7 @@ var AdminNotesTooltipView = {
      * Updates notes text
      */
     refresh: function () {
-        this.text.text(AdminNotesCollection.getNotes(this.pluginKey));
+        this.text.text(AdminNotesCollection.getNotes(this.key));
     }
 };
 

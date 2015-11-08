@@ -6,18 +6,18 @@
  * Saves data via AdminNotesService
  *
  * Uses the following format
- *    { title: "Plugin title", notes: "Plugin notes" }
+ *    { title: "Entry title", notes: "Entry notes" }
  *
  */
 var AdminNotesCollection = {
     $: AJS.$,
-    // List of plugins with notes [ {key: '', title: ''} ]
-    plugins: [],
-    // Notes for the plugins { 'plugin key': 'notes' }
+    // List of entries with notes [ {key: '', title: ''} ]
+    entries: [],
+    // Notes for the entries { 'key': 'notes' }
     notes: {},
-    // Plugin titles { 'plugin key': 'title' }
+    // Entries titles { 'key': 'title' }
     titles: {},
-    // positions in plugins array { 'plugin key': index }
+    // positions in entries array { 'key': index }
     pos: {},
     timer: undefined,
     REFRESH: 5000,
@@ -32,8 +32,8 @@ var AdminNotesCollection = {
     hasNotes: function (key) {
         return typeof this.notes[key] != 'undefined';
     },
-    getPlugins: function () {
-        return this.plugins;
+    getEntries: function () {
+        return this.entries;
     },
 
     /**
@@ -46,14 +46,14 @@ var AdminNotesCollection = {
         this.fetch();
     },
     fetch: function () {
-        AdminNotesService.getPlugins().done(this.$.proxy( this.resetWithData, this ));
+        AdminNotesService.getEntries().done(this.$.proxy( this.resetWithData, this ));
     },
     // @TODO Hide private methods
     /**
      * [Private] Re-init collection with received data
      */
     resetWithData: function (data) {
-        this.plugins = [];
+        this.entries = [];
         this.notes = {};
         this.titles = {};
         this.pos = {};
@@ -61,8 +61,8 @@ var AdminNotesCollection = {
             if (data.hasOwnProperty(key)) {
                 try {
                     var json = JSON.parse(data[key]);
-                    this.pos[key] = this.plugins.length;
-                    this.plugins[this.plugins.length] = {key: key, title: json['title'] || key};
+                    this.pos[key] = this.entries.length;
+                    this.entries[this.entries.length] = {key: key, title: json['title'] || key};
                     this.notes[key] = json['notes']; // can be undefined, .hasNotes will detect it
                     this.titles[key] = json['title'] || key;
                 } catch (e) {}
@@ -96,11 +96,11 @@ var AdminNotesCollection = {
         return res;
     },
     /**
-     * Add notes for new plugin
+     * Add notes for new entry
      *
-     * @param key plugin key
-     * @param title plugin title
-     * @param notes plugin notes
+     * @param key   key
+     * @param title title
+     * @param notes notes
      * @returns the deferred object, .fail gets current notes
      */
     add: function (key, title, notes) {
@@ -117,9 +117,9 @@ var AdminNotesCollection = {
         return res;
     },
     /**
-     * Remove notes for new plugin
+     * Remove notes for the entry
      *
-     * @param key plugin key
+     * @param key  key
      * @returns the deferred object, .fail gets current notes
      */
     remove: function (key) {
@@ -143,11 +143,11 @@ var AdminNotesCollection = {
         this.notes[key] = notes;
         if (this.pos[key]) {
             // existing key
-            this.plugins[this.pos[key]].title = title;
+            this.entries[this.pos[key]].title = title;
         } else {
             // new key added
-            this.pos[key] = this.plugins.length;
-            this.plugins[this.pos[key]] = {key: key, title: title};
+            this.pos[key] = this.entries.length;
+            this.entries[this.pos[key]] = {key: key, title: title};
         }
 
         var $ = this.$;
@@ -161,7 +161,7 @@ var AdminNotesCollection = {
     removeEntry: function (key) {
         this.titles[key] = undefined;
         this.notes[key] = undefined;
-        this.plugins.splice(this.pos[key], 1);
+        this.entries.splice(this.pos[key], 1);
         this.pos[key] = undefined;
 
         var $ = this.$;
