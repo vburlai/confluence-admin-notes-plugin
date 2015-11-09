@@ -87,7 +87,7 @@ var AdminNotesManageListView = {
 	        return {
 	            key: pluginKey,
 	            name: this.$(el).find('.upm-plugin-name').text(),
-	            buttonId: 'admin-notes-btn-'+pluginKey.replace(/[^a-zA-Z]/g, ''),
+	            buttonId: 'admin-notes-btn-'+pluginKey.replace(/[^-a-zA-Z0-9]/g, '-'),
 	            hasNotes: AdminNotesCollection.hasNotes(pluginKey)
 	        };
         }
@@ -97,8 +97,8 @@ var AdminNotesManageListView = {
 
             return {
                 key: macroKey,
-                name: this.$(el).find('TD:first').text(),
-                buttonId: 'admin-notes-btn-'+macroKey.replace(/[^a-zA-Z]/g, ''),
+                name: macroKey,
+                buttonId: 'admin-notes-btn-'+macroKey.replace(/[^-a-zA-Z0-9]/g, '-'),
                 hasNotes: AdminNotesCollection.hasNotes(macroKey)
             };
         }
