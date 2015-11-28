@@ -1,4 +1,4 @@
-# Confluence Admin Notes Confluence Plugin
+# Confluence Admin Notes Plugin
 
 ## Add notes in Confluence Administration area for yourself or to share with colleague
 
